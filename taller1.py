@@ -6,6 +6,39 @@ from ply import lex
 from sys import stdin
 
 tipos = ['tk_cadena', 'tk_caracter', 'tk_real', 'tk_entero']
+reserved = {
+    'funcion_principal': 'funcion_principal',
+    'fin_principal': 'fin_principal',
+    'leer': 'leer',
+    'imprimir': 'imprimir',
+    'verdadero': 'verdadero',
+    'falso': 'falso',
+    'booleano': 'booleano',
+    'cadena': 'cadena',
+    'caracter': 'caracter',
+    'real': 'real',
+    'entero': 'entero',
+    'defecto': 'defecto',
+    'si': 'si',
+    'entonces': 'entonces',
+    'si_no': 'si_no',
+    'fin_si': 'fin_si',
+    'mientras': 'mientras',
+    'hacer': 'hacer',
+    'fin_mientras': 'fin_mientras',
+    'para': 'para',
+    'fin_para': 'fin_para',
+    'seleccionar': 'seleccionar',
+    'entre': 'entre',
+    'caso': 'caso',
+    'romper': 'romper',
+    'fin_seleccionar': 'fin_seleccionar',
+    'estructura': 'estructura',
+    'fin_estructura': 'fin_estructura',
+    'funcion': 'funcion',
+    'retornar': 'retornar'
+}
+
 
 def find_column(input, token):
     last_cr = input.rfind('\n',0,token.lexpos)
@@ -17,36 +50,6 @@ def find_column(input, token):
     return column
 
 tokens = (
-    'funcion_principal',
-    'fin_principal',
-    'leer',
-    'imprimir',
-    'verdadero',
-    'falso',
-    'booleano',
-    'cadena',
-    'caracter',
-    'real',
-    'entero',
-    'defecto',
-    'si',
-    'entonces',
-    'si_no',
-    'fin_si',
-    'mientras',
-    'hacer',
-    'fin_mientras',
-    'para',
-    'fin_para',
-    'seleccionar',
-    'entre',
-    'caso',
-    'romper',
-    'fin_seleccionar',
-    'estructura',
-    'fin_estructura',
-    'funcion',
-    'retornar',
     'fin_funcion',
     'tk_cadena',
     'tk_caracter',
@@ -107,130 +110,6 @@ def t_newline(token):
 def t_eolcomment(token):
     r'//[^\n]*'
     pass
-
-def t_funcion_principal(token):
-    r'funcion_principal'
-    return token
-
-def t_fin_principal(token):
-    r'fin_principal'
-    return token
-
-def t_leer(token):
-    r'leer'
-    return token
-
-def t_defecto(token):
-    r'defecto'
-    return token
-
-def t_imprimir(token):
-    r'imprimir'
-    return token
-
-def t_verdadero(token):
-    r'verdadero'
-    return token
-
-def t_falso(token):
-    r'falso'
-    return token
-
-def t_booleano(token):
-    r'booleano'
-    return token
-
-def t_cadena(token):
-    r'cadena'
-    return token
-
-def t_caracter(token):
-    r'caracter'
-    return token
-
-def t_real(token):
-    r'real'
-    return token
-
-def t_entero(token):
-    r'entero'
-    return token
-
-def t_si_no(token):
-    r'si_no'
-    return token
-
-def t_fin_si(token):
-    r'fin_si'
-    return token
-
-def t_si(token):
-    r'si'
-    return token
-
-def t_entonces(token):
-    r'entonces'
-    return token
-
-def t_hacer(token):
-    r'hacer'
-    return token
-
-def t_fin_mientras(token):
-    r'fin_mientras'
-    return token
-
-def t_mientras(token):
-    r'mientras'
-    return token
-
-def t_fin_para(token):
-    r'fin_para'
-    return token
-
-def t_para(token):
-    r'para'
-    return token
-
-def t_fin_seleccionar(token):
-    r'fin_seleccionar'
-    return token
-
-def t_seleccionar(token):
-    r'seleccionar'
-    return token
-
-def t_entre(token):
-    r'entre'
-    return token
-
-def t_caso(token):
-    r'caso'
-    return token
-
-def t_romper(token):
-    r'romper'
-    return token
-
-def t_fin_estructura(token):
-    r'fin_estructura'
-    return token
-
-def t_estructura(token):
-    r'estructura'
-    return token
-
-def t_fin_funcion(token):
-    r'fin_funcion'
-    return token
-
-def t_funcion(token):
-    r'funcion'
-    return token
-
-def t_retornar(token):
-    r'retornar'
-    return token
 
 def t_tk_cadena(token):
     r'"[^"]*"'
@@ -354,8 +233,10 @@ while True:
     except:
         break
     if not t: break
-    #print dir(t.lexer.token)
-    if (t.type in tipos or t.type == 'id'):
+    #print t
+    if (t.value in reserved):
+        print '<'+t.value+','+str(t.lineno)+','+str(find_column(code, t))+'>'
+    elif (t.type == 'id' or t.type in tipos):
         print '<'+t.type+','+str(t.value)+','+str(t.lineno)+','+str(find_column(code, t))+'>'
     else:
         print '<'+t.type+','+str(t.lineno)+','+str(find_column(code, t))+'>'
