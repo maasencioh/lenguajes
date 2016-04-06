@@ -1,0 +1,61 @@
+grammar = [
+    ("S",[ "funcion" , "H" , "id" , "(" , "parametros" , ")" , "hacer" ]),
+    ("H",[ "tk_entero"]),
+    ("H",[ "tk_booleano"]),
+    ("H",[ "tk_caracter"]),
+    ("H",[ "tk_entero"]),
+    ("H",[ "tk_entero"]),
+    ("parametros",[ "H" ]),
+    ("parametros",[ "H" , "," , "H" ]),
+    ("parametros", [] ),
+
+    ("S",[ "funcion_primcipal" , "A" , "fin_principal" ]),
+    ("S",[ "funcion" , "H" , "id" , "(" , "parametros" , ")" , "hacer" ]),
+    ("A",[ "funcion_primcipal" , "A" , "fin_principal" ]),
+    ("A",[ "entero" , "B" , ";" , "A" ]),
+    ("A",[ "boolean" , "B" , ";" , "A" ]),
+    ("A",[ "caracter" , "B" , ";" , "A" ]),
+    ("A",[ "real" , "B" , ";" , "A" ]),
+    ("A",[ "cadena" , "B" , ";" , "A" ]),
+    ("A",[ "leer" , "(" , "id" , ")" , ";" , "A" ]),
+    ("A",[ "imprimir" , "(" , "D" , ")" , ";" , "A" ]),
+    ("A", [])
+    ("B", [ "id" , "," , "B" ]),                            #CREACION DE MAS VARIABLES EN 1 LINEA
+    ("B", [ "id" , "=" , "C" ]),                            #ASIGNACION DE UNA VARIABLE
+    ("B", [ "id" ]),                                    #CREACION DE UNA VARIABLE SOLA
+    ("C", [ "num" , "," , "C" ]),                           #ASIGNACION DE MAS DE UN VALOR NUMERICO
+    ("C", [ "id" , "," , "C" ]),                            # O IDENTIFICADOR
+    ("C", [ "num" ]),                                       #ASIGNACION DE UN VALOR ÚNICO NUMERICO
+    ("C", [ "id" ]),                                    # O IDENTIFICADOR
+    ("D", [ "id" , "," , "D" ]),
+    ("D", [ "string" , "," , "D" ]),
+    ("D", [ "id" ]),
+    ("D", [ "string" ]),
+    ("E", [ "E" , "-" , "E" ]),
+    ("E", [ "E" , "*" , "E" ]),
+    ("E", [ "E" , "/" , "E" ]),
+    ("E", [ "E" , "%" , "E" ]),
+    ("E", [ "E" , "==" , "E" ]),
+    ("E", [ "E" , "=" , "E" ]),
+    ("E", [ "E" , "<=" , "E" ]),
+    ("E", [ "E" , ">=" , "E" ]),
+    ("E", [ "E" , "<" , "E" ]),
+    ("E", [ "E" , ">" , "E" ]),
+    ("E", [ "E" , "&&" , "E" ]),
+    ("E", [ "E" , "||" , "E" ]),
+    ("E", [ "E" , "!=" , "E" ]),
+    ("E", [ "E" , "!" , "E" ]),
+    ("E", [ "E" , ":" , "E" ]),
+    ("E", [ "E" , ">=" , "E" ]),
+    ("E", [ "E" , "<" , "E" ]),
+    ("E", [ "E" , ">" , "E" ]),
+    ("E", [ "(" , "E" , ")" ]),
+    ("E", [ "num"] ),
+    ("E", [ "id"] ),
+]
+
+def p_star(p):
+    'S : funcion_primcipal A fin_principal'
+    p[0] =  (p[1],p[2],p[3])
+
+def p_
