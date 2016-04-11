@@ -1,10 +1,10 @@
 grammar = [
-    ("S",[ "estructura" , "id" , "E" , "fin_estructura" , "S"]),            #DONE
-    ("S",[ "funcion" , "entero" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "retornar" , "fin_funcion"]),
-    ("S",[ "funcion" , "booleano" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "retornar" , "fin_funcion"]),
+    ("S",[ "estructura" , "id" , "E" , "fin_estructura" , "S"]),
+    ("S",[ "funcion" , "entero" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "CUERPO" , "retornar" , "fin_funcion"]),
+    ("S",[ "funcion" , "booleano" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "CUERPO" , "retornar" , "fin_funcion"]),
     ("S",[ "funcion" , "caracter" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "CUERPO" , "retornar" , "fin_funcion"]),
-    ("S",[ "funcion" , "real" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "retornar" , "fin_funcion"]),
-    ("S",[ "funcion" , "cadena" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "retornar" , "fin_funcion"]),
+    ("S",[ "funcion" , "real" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "CUERPO" , "retornar" , "fin_funcion"]),
+    ("S",[ "funcion" , "cadena" , "id" , "(" , "PARAMETROS" , ")" , "hacer" , "CUERPO" , "retornar" , "fin_funcion"]),
     ("S",[ "funcion_principal" , "A" , "fin_principal" ]),
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ESTADOS PARA LA ESTRUCTURA
     ("E",[ "DECLARACION" , "E" ]),
@@ -36,7 +36,7 @@ grammar = [
     ("rcd",[ "tk_coma" , "id" , "rcd" ]),
     ("rcd",[]),
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ESTADOS PARA LOS PARAMETROS
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ESTADOS PARA LAS FUNCIONES
     ("PARAMETROS",[ "entero" , "id" , "intp" ]),
     ("PARAMETROS",[ "booleano", "id" , "boolp" ]),
     ("PARAMETROS",[ "caracter", "id" , "charp" ]),
@@ -52,10 +52,6 @@ grammar = [
     ('floatp',[]),
     ('stringp',[ "id" , "tk_coma" , "stringp" ]),
     ('stringp',[]),
-
-    ("CUERPO",[ "DECLARACION" , "CUERPO" ]),
-    ("CUERPO",[ "ASIGNACION" , "CUERPO" ]),
-    ("CUERPO",[]),#falta agregar casos....
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ("ASIGNACION",[ "entero" , "int" ]),
     ("ASIGNACION",[ "booleano", "bool" ]),
@@ -91,8 +87,46 @@ grammar = [
     ('char',[ "id" , "PUNTOCOMA" ]),
     ("rc",[ "tk_coma" , "id" , "rc" , "ac" ]),
     ("rc",[]),
-    ("ac",["tk_asing" , "tk_caracter"]),
+    ("ac",[ "tk_asing" , "tk_caracter"]),
     ("ac",[]),
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ESTRUCTURAS DE CONTROL
+    ("SI",[ "si" , "tk_par_izq" , "LOGICAS" , "tk_par_der" , "entonces" , "CUERPO" , "fin_si"]),
+    ("CASE",[ ]),
+    ("FOR",[ ]),
+    ("WHILE",[ ]),
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Punto y coma
+    ("CUERPO",[ "DECLARACION" , "CUERPO" ]),
+    ("CUERPO",[ "ASIGNACION" , "CUERPO" ]),
+    ("CUERPO",[ "BINARIAS" , "CUERPO" ]),
+    ("CUERPO",[]),#falta agregar casos....
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++OPERACIONES BINARIAS
+    ("BINARIAS",[ "BINARIAS" , "OPERADOR" , "BINARIAS" , "PUNTOYCOMA"]),
+    ("BINARIAS",[ "tk_par_izq" , "BINARIAS" , "OPERADOR" , "BINARIAS" , "tk_par_izq" , "PUNTOYCOMA"]),
+    ("OPERADOR",[ "tk_mas" ]),
+    ("OPERADOR",[ "tk_menos" ]),
+    ("OPERADOR",[ "tk_mult" ]),
+    ("OPERADOR",[ "tk_div" ]),
+    ("OPERADOR",[ "tk_mod" ]),
+    ("OPERADOR",[ "tk_asig" ]),
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++OPERACIONES LOGICAS
+    ("LOGICAS",[ "id" , "OPERADORL" , "id" ]),
+    ("LOGICAS",[ "id" , "OPERADORL" , "id" , "tk_coma" ,  "LOGICAS"]),
+    ("LOGICAS",[ "tk_par_izq" , "id" , "OPERADORL" , "id" , "tk_par_der"]),
+    ("LOGICAS",[ "tk_par_izq" , "id" , "OPERADORL" , "id" , "tk_coma" , "tk_par_der" , "LOGICAS"]),
+    ("OPERADORL",[ "tk_menor" ]),
+    ("OPERADORL",[ "tk_mayor" ]),
+    ("OPERADORL",[ "tk_menor_igual" ]),
+    ("OPERADORL",[ "tk_mayor_igual" ]),
+    ("OPERADORL",[ "tk_igual" ]),
+    ("OPERADORL",[ "tk_y" ]),
+    ("OPERADORL",[ "tk_o" ]),
+    ("OPERADORL",[ "tk_dif" ]),
+    ("OPERADORL",[ "tk_neg" ]),
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Punto y coma
     ("PUNTOCOMA",[ "tk_pyc" ]),
     ("PUNTOCOMA",[ "tk_pyc" , "tk_finLinea"])#+creo que toca agregar un nuevo token llamado fin de línea,que recibe '/n'
