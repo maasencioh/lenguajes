@@ -63,7 +63,8 @@ grammar = [
     ('ESTRUCTURA_CONTROL' ,[ 'SI' , 'ESTRUCTURA_CONTROL' ]),
     ('ESTRUCTURA_CONTROL' ,[ 'PARA' , 'ESTRUCTURA_CONTROL' ]),
     ('ESTRUCTURA_CONTROL' ,[ 'MIENTRAS' , 'ESTRUCTURA_CONTROL' ]),
-    ('ESTRUCTURA_CONTROL' ,[ 'MULTIPLE' , 'ESTRUCTURA_CONTROL']),
+    ('ESTRUCTURA_CONTROL' ,[ 'MULTIPLE' , 'ESTRUCTURA_CONTROL' ]),
+    ('ESTRUCTURA_CONTROL' ,[ ]),
     ('SI',[ 'si' , 'tk_par_izq' , 'LOGICAS' , 'tk_par_der' , 'entonces' , 'CUERPO' , 'fin_si']),
     ('SI',[ 'si' , 'tk_par_izq' , 'LOGICAS' , 'tk_par_der' , 'entonces' , 'CUERPO' , 'si_no' , 'CUERPO' , 'fin_si' ]),
     ('MIENTRAS',[ 'mientras' , 'tk_par_izq' , 'LOGICAS' , 'tk_par_der' , 'hacer' , 'CUERPO' , 'fin_mientras' ]),
@@ -168,7 +169,8 @@ grammar = [
     ('CASOS',[ 'defecto' , 'tk_dosp' , 'CUERPO' ]),
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++COMENTARIOS
-    ('COMENTARIOS',[ '' ])
+    ('COMENTARIOS',[ '\*' , 'TEXTO' , '*/' ]),
+    ('COMENTARIOS',[ '//' , 'TEXTO' ]),
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Punto y coma
     ('PUNTOCOMA',[ 'tk_pyc' ]),
