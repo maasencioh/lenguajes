@@ -229,6 +229,7 @@ psilexer = lex.lex()
 psilexer.input(code)
 
 grammar = [
+    ('INICIO',['S']),
     ('S',[ 'estructura' , 'id' , 'E' , 'fin_estructura' , 'S']),
     ('S',[ 'funcion' , 'entero' , 'id' , '(' , 'PARAMETROS' , ')' , 'hacer' , 'CUERPO' , 'retornar' , 'fin_funcion']),
     ('S',[ 'funcion' , 'booleano' , 'id' , '(' , 'PARAMETROS' , ')' , 'hacer' , 'CUERPO' , 'retornar' , 'fin_funcion']),
