@@ -36,6 +36,7 @@ reserved = {
     'estructura': 'estructura',
     'fin_estructura': 'fin_estructura',
     'funcion': 'funcion',
+    'fin_funcion':'fin_funcion',
     'retornar': 'retornar'
 }
 
@@ -50,7 +51,6 @@ def find_column(input, token):
     return column
 
 tokens = (
-    'fin_funcion',
     'tk_cadena',
     'tk_caracter',
     'tk_real',
@@ -86,7 +86,7 @@ states = (
 t_ignore = ' \t\v\r'
 
 def t_error(token):
-    print '>>> Error lexico (linea:'+str(token.lexer.lineno)+', posicion: '+str(find_column(code, token))+')'
+    print '>>> Error lexico(linea: '+str(token.lexer.lineno)+', posicion: '+str(find_column(code, token))+')'
 
 def t_comment(token):
     r'/\*'
