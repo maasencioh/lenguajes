@@ -12,7 +12,8 @@ expresionPrimaria
     | 'funcion_principal' cuerpo 'fin_principal'
     ;
 
-estructura : declaracion+;
+estructura
+    :declaracion*;
 
 declaracion
     : ('entero' ID (',' ID)* ';'
@@ -20,7 +21,7 @@ declaracion
     | 'caracter' ID (',' ID)* ';'
     | 'real' ID (',' ID)* ';'
     | 'cadena' ID (',' ID)* ';'
-    )*;
+    )+;
 
 parametros
     : 'entero' ID (',' ID)*
@@ -37,7 +38,7 @@ estructuraControl
     | para estructuraControl
     | mientras estructuraControl
     | multiple estructuraControl
-    )*;
+    )+;
 
 si : 'si' '(' logicas ')' 'entonces' cuerpo ('si_no' cuerpo)? 'fin_si';
 
